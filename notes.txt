@@ -1,0 +1,2 @@
+"Now that we have a template and a URL entry, we need to tie
+them together, so that the URL will display the template."
