@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from collection import views 
+from django.views.generic import TemplateView
+from collection import views
 
-
+# this is the map of the webiste kinda
 urlpatterns = [
-    path('', views.index, name='home'), # '' would be route it we were using one
-    path('admin/', admin.site.urls),   # home is optional, help keeps track
+    path('', views.index, name = 'home'), # '' would be route it we were using one
+    # all u
+    path('about/',
+        TemplateView.as_view(template_name = "about.html"),
+        name = 'about'),
+
+    path('contact/',
+        TemplateView.as_view(template_name = "contact.html"),
+        name = 'contact'),
+    path('admin/', admin.site.urls),
 ]
