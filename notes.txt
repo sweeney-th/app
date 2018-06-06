@@ -1,2 +1,21 @@
 "Now that we have a template and a URL entry, we need to tie
 them together, so that the URL will display the template."
+
+• Each block (like {% block content %}) has the name we
+defined in our base.html file so the template engine knows
+where to render which part.
+
+• Check out the title block. See the {{ block.super }}? In
+our base.html file, we defined “My Hello Web App Project”
+as the default content. {{ block.super }} will insert the
+contents of the default block instead of overriding it. Now
+our page titles can have both the local page name as well
+as the title of the website. If you ever change the main title
+of the website, you only have to update it in base.html and
+it will automatically update the child pages.
+
+• If you’re loading static assets like images, you’ll still need
+to add {% load staticfiles %} to the top of the base
+layout file. We’re not loading static files in index.html so
+we haven’t added this loading tag, but keep in mind if you
+add static files to your version.
