@@ -19,3 +19,19 @@ to add {% load staticfiles %} to the top of the base
 layout file. We’re not loading static files in index.html so
 we haven’t added this loading tag, but keep in mind if you
 add static files to your version.
+
+<p>There are {{ number }} walrus{{ number|pluralize:"es" }}!</p>
+
+<p>There are six dogs! <b>
+{% if number == 6 %}
+True
+{% else %}
+False
+{% endif %}
+</b></p>
+
+<p>There are {{ number|apnumber }} dogs!</p>
+makes it the word instead of the number
+
+# just getting one object!
+correct_thing = Thing.objects.get(name='Hello')

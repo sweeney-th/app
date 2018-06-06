@@ -20,14 +20,17 @@ from collection import views
 
 # this is the map of the webiste kinda
 urlpatterns = [
-    path('', views.index, name = 'home'), # '' would be route it we were using one
-    # all u
+    path('', views.index, name = 'home'), # '' would be route - see below
+
+    ### standard sections
     path('about/',
         TemplateView.as_view(template_name = "about.html"),
         name = 'about'),
-
     path('contact/',
         TemplateView.as_view(template_name = "contact.html"),
         name = 'contact'),
     path('admin/', admin.site.urls),
+
+    ### thing_detailed related code
+    path('things/<slug>/', views.thing_detail,name = 'thing_detail'),
 ]
