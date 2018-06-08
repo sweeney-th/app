@@ -35,3 +35,8 @@ makes it the word instead of the number
 
 # just getting one object!
 correct_thing = Thing.objects.get(name='Hello')
+
+
+# I was just wondering about This
+As usual, we’ll need to do the typical create-a- URL , create-a-
+view, create-a-template routine we’ve been doing.

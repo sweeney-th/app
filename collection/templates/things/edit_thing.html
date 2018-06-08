@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+    {% block title %}
+        Edit {{ thing.name }} - {{ block.super }}
+    {% endblock title %}
+
+{% block content %}
+    <h1>Edit "{{ thing.name }}"</h1>
+    <!-- submitting via POST (a standardized method)
+        is to help prevent CSS attacks-->
+        <form role="form" action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+{% endblock %}
