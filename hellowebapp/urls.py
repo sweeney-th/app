@@ -25,10 +25,13 @@ from django.contrib.auth.views import (
     password_reset_confirm, password_reset_complete,
 )
 
+# for user-Thing association
+from collection.backends import MyRegistrationView
+
 # this is the map of the webiste kinda
 urlpatterns = [
 
-    # home base 
+    # home base
     path('', views.index, name = 'home'), # '' would be route - see below
 
     ### standard sections
@@ -70,4 +73,11 @@ urlpatterns = [
 
         # changing a thing - after the thing in the url path
         path('things/<slug>/edit', views.edit_thing, name = "edit_thing"),
+
+    ### Register for user to Thing
+    path('accounts/register/', MyRegistrationView.as_view(),
+        name='registration_register'),
+
+    path('accounts/create_thing/', views.create_thing,
+        name='registration_create_thing'),
 ]
