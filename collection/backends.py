@@ -11,6 +11,7 @@ class MyRegistrationView(RegistrationView):
 
 
 # # from the github
+# what calls this function though? Should I use a contrustor?
 # class MyRegistrationView(RegistrationView):
 #     def get_success_url():
 #         # the named URL that we want to redirect to after
