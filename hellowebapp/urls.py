@@ -16,31 +16,42 @@ Including another URLconf
 # for email registration
 from django.urls import include, path
 from django.contrib import admin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from collection import views
-
-# password managment templates
-from django.contrib.auth.views import (
-    password_reset, password_reset_done,
-    password_reset_confirm, password_reset_complete,
-)
-
 # for user-Thing association
 from collection.backends import MyRegistrationView
+# password managment templates
+from django.contrib.auth.views import (
+    password_reset,
+    password_reset_done,
+    password_reset_confirm,
+    password_reset_complete,
+)
+
+
 
 # this is the map of the webiste kinda
 urlpatterns = [
 
     # home base
-    path('', views.index, name = 'home'), # '' would be route - see below
+    path('', views.index,
+        name = 'home'), # '' would be route - see below
 
     ### standard sections
     path('about/',
         TemplateView.as_view(template_name = "about.html"),
         name = 'about'),
+
+    path('things/', RedirectView.as_view(pattern_name ='browse',
+        permanent = True)),
+
     path('contact/',
         TemplateView.as_view(template_name = "contact.html"),
         name = 'contact'),
+
+    # for browse
+    path('browse/', RedirectView.as_view(
+        pattern_name = 'browse', permanent = True)),
 
     ### admin
     path('admin/', admin.site.urls),
@@ -56,15 +67,18 @@ urlpatterns = [
         {'template_name': 'registration/password_reset_form.html'},
         name = "password_reset"),
 
-    path('accounts/password/reset/done/', password_reset_done,
+    path('accounts/password/reset/done/',
+        password_reset_done,
         {'template_name': 'registration/password_reset_done.html'},
         name = "password_reset_done"),
 
-    path('accounts/password/reset/<uidb64>/<token>/', password_reset_confirm,
+    path('accounts/password/reset/<uidb64>/<token>/',
+        password_reset_confirm,
         {'template_name': 'registration/password_reset_confirm.html'},
         name = "password_reset_confirm"),
 
-    path('accounts/password/done/', password_reset_complete,
+    path('accounts/password/done/',
+        password_reset_complete,
         {'template_name': 'registration/password_reset_complete.html'},
         name = "password_reset_complete"),
 
@@ -76,8 +90,14 @@ urlpatterns = [
 
     ### Register for user to Thing
     path('accounts/register/', MyRegistrationView.as_view(),
-        name='registration_register'),
+        name = 'registration_register'),
 
     path('accounts/create_thing/', views.create_thing,
-        name='registration_create_thing'),
+        name = 'registration_create_thing'),
+
+    ### Browser
+    path('browse/name/', views.browse_by_name, name = 'browse'),
+
+    path('browse/name/<initial>/',views.browse_by_name,
+        name = 'browse_by_name'),
 ]

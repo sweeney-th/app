@@ -48,28 +48,44 @@ def edit_thing(request, slug):
     # render the template
     return render(request, 'things/edit_thing.html', {
         'thing': thing,
-        'form'  : form
+        'form' : form,
     })
 
-# make a class creation for new users to make thier Thing
+
+# add below your edit_thing view
+# add below your edit_thing view
 def create_thing(request):
-    # what are we making?
     form_class = ThingForm
-    # if we are getting a POST request
+    # if we're coming from a submitted form, do this
     if request.method == 'POST':
-        # get data and apply to object
+        # grab the data from the submitted form and apply to
+        # the form
         form = form_class(request.POST)
         if form.is_valid():
-            # create object, don't save it yet # could use contructor?
-            thing = form.save(commit = False)
+            # create an instance but do not save yet
+            thing = form.save(commit=False)
+            # set the additional details
+            thing.user = request.user
             thing.slug = slugify(thing.name)
-            # we've set attributes, now save
+            # save the object
             thing.save()
+            # redirect to our newly created thing
             return redirect('thing_detail', slug=thing.slug)
+    # otherwise just create the form
     else:
-        # just make the form
         form = form_class()
-        # return the Thing
         return render(request, 'things/create_thing.html', {
-            'form': form,
+                'form': form,
         })
+
+def browse_by_name(request, initial = None):
+    # if they asked for something specific give it?
+    if initial:
+        things = Thing.objects.filter(
+        name__istartswith = initial).order_by('name')
+    else:
+        # or else list by name
+        things = Thing.objects.all().order_by('name')
+    return render(request, 'search/search.html', {
+        'things': things,'initial': initial,
+})
